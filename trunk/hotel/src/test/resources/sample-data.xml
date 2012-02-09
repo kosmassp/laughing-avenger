@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <table name="app_user">
+        <column>id</column>
+        <column>username</column>
+        <column>password</column>
+        <column>first_name</column>
+        <column>last_name</column>
+        <column>address</column>
+        <column>city</column>
+        <column>country</column>
+        <column>email</column>
+        <column>phone_number</column>
+        <column>postal_code</column>
+        <column>province</column>
+        <column>website</column>
+        <column>password_hint</column>
+        <column>version</column>
+        <column>account_enabled</column>
+        <column>account_expired</column>
+        <column>account_locked</column>
+        <column>credentials_expired</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="username">user</value>
+            <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+            <value description="first_name">Tomcat</value>
+            <value description="last_name">User</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">matt_raible@yahoo.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://tomcat.apache.org</value>
+            <value description="password_hint"><![CDATA[A male kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="username">admin</value>
+            <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+            <value description="first_name">Matt</value>
+            <value description="last_name">Raible</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">matt@raibledesigns.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://raibledesigns.com</value>
+            <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+    </table>
+    <table name="role">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="name">ROLE_ADMIN</value>
+            <value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="name">ROLE_USER</value>
+            <value description="description"><![CDATA[Default role for all Users]]></value>
+        </row>
+    </table>
+    <table name="user_role">
+        <column>user_id</column>
+        <column>role_id</column>
+        <row>
+            <value description="user_id">-1</value>
+            <value description="role_id">-2</value>
+        </row>
+        <row>
+            <value description="user_id">-2</value>
+            <value description="role_id">-1</value>
+        </row>
+    </table>
+    <table name="room_type">
+	  <column>id</column>
+	  <column>name</column>
+	  <column>description</column>
+	  <row>
+	    <value>1</value>
+	    <value>VIP</value>
+	    <value>VIP1 : 1 Single Bed, Bathroom, Breakfast, AC, Water Heater.</value>
+	  </row>
+	  <row>
+	    <value>2</value>
+	    <value>VIP Double</value>
+	    <value>VIP2 : 2 Single Bed, Bathroom, Breakfast, AC, Water Heater.</value>
+	  </row>
+	  <row>
+	    <value>3</value>
+	    <value>VIP Couple</value>
+	    <value>VIP3 : 1 King Size Bed, Bathroom, Breakfast, AC, Water Heater.</value>
+	  </row>
+	  <row>
+	    <value>4</value>
+	    <value>Standard</value>
+	    <value>Standard1 : 1 Single Bed, Bathroom, Breakfast.</value>
+	  </row>
+	  <row>
+	    <value>5</value>
+	    <value>Standard Double</value>
+	    <value>Standard2 : 2 Single Bed, Bathroom, Breakfast.</value>
+	  </row>
+	  <row>
+	    <value>6</value>
+	    <value>Standard Couple</value>
+	    <value>Standard3 : 1 King Size Bed, Bathroom, Breakfast.</value>
+	  </row>
+	</table>
+	<table name="event">
+	  <column>id</column>
+	  <column>eventName</column>
+	  <row>
+	    <value>1</value>
+	    <value>Custom</value>
+	  </row>
+	  <row>
+	    <value>2</value>
+	    <value>Sales</value>
+	  </row>
+	  <row>
+	    <value>3</value>
+	    <value>Normal</value>
+	  </row>
+	  <row>
+	    <value>4</value>
+	    <value>Natal</value>
+	  </row>
+	</table>
+	<table name="event_price">
+	  <column>id</column>
+	  <column>price</column>
+	  <column>id_event</column>
+	  <column>id_room_type</column>
+	  <row>
+	    <value description="id">1</value>
+	    <value description="price">50000</value>
+	    <value description="id_event">2</value>
+	    <value description="id_room_type">1</value>
+	  </row>
+	  <row>
+	    <value description="id">2</value>
+	    <value description="price">75000</value>
+	    <value description="id_event">2</value>
+	    <value description="id_room_type">2</value>
+	  </row>
+	  <row>
+	    <value description="id">3</value>
+	    <value description="price">100000</value>
+	    <value description="id_event">2</value>
+	    <value description="id_room_type">3</value>
+	  </row>
+	  <row>
+	    <value description="id">4</value>
+	    <value description="price">40000</value>
+	    <value description="id_event">2</value>
+	    <value description="id_room_type">4</value>
+	  </row>
+	  <row>
+	    <value description="id">5</value>
+	    <value description="price">50000</value>
+	    <value description="id_event">2</value>
+	    <value description="id_room_type">5</value>
+	  </row>
+	  <row>
+	    <value description="id">6</value>
+	    <value description="price">60000</value>
+	    <value description="id_event">2</value>
+	    <value description="id_room_type">6</value>
+	  </row>
+	  <row>
+	    <value description="id">7</value>
+	    <value description="price">100000</value>
+	    <value description="id_event">3</value>
+	    <value description="id_room_type">1</value>
+	  </row>
+	  <row>
+	    <value description="id">8</value>
+	    <value description="price">150000</value>
+	    <value description="id_event">3</value>
+	    <value description="id_room_type">2</value>
+	  </row>
+	  <row>
+	    <value description="id">9</value>
+	    <value description="price">200000</value>
+	    <value description="id_event">3</value>
+	    <value description="id_room_type">3</value>
+	  </row>
+	  <row>
+	    <value description="id">10</value>
+	    <value description="price">80000</value>
+	    <value description="id_event">3</value>
+	    <value description="id_room_type">4</value>
+	  </row>
+	  <row>
+	    <value description="id">11</value>
+	    <value description="price">100000</value>
+	    <value description="id_event">3</value>
+	    <value description="id_room_type">5</value>
+	  </row>
+	  <row>
+	    <value description="id">12</value>
+	    <value description="price">120000</value>
+	    <value description="id_event">3</value>
+	    <value description="id_room_type">6</value>
+	  </row>
+	  <row>
+	    <value description="id">13</value>
+	    <value description="price">150000</value>
+	    <value description="id_event">4</value>
+	    <value description="id_room_type">1</value>
+	  </row>
+	  <row>
+	    <value description="id">14</value>
+	    <value description="price">225000</value>
+	    <value description="id_event">4</value>
+	    <value description="id_room_type">2</value>
+	  </row>
+	  <row>
+	    <value description="id">15</value>
+	    <value description="price">300000</value>
+	    <value description="id_event">4</value>
+	    <value description="id_room_type">3</value>
+	  </row>
+	  <row>
+	    <value description="id">16</value>
+	    <value description="price">120000</value>
+	    <value description="id_event">4</value>
+	    <value description="id_room_type">4</value>
+	  </row>
+	  <row>
+	    <value description="id">17</value>
+	    <value description="price">150000</value>
+	    <value description="id_event">4</value>
+	    <value description="id_room_type">5</value>
+	  </row>
+	  <row>
+	    <value description="id">18</value>
+	    <value description="price">180000</value>
+	    <value description="id_event">4</value>
+	    <value description="id_room_type">6</value>
+	  </row>
+	</table>
+	<table name="room">
+		<column>id</column>
+		<column>description</column>
+		<column>room_floor</column>
+		<column>name</column>
+		<column>room_number</column>
+		<column>status</column>
+		<column>id_room_type</column>
+		<row>
+			<value description="id">1</value>
+			<value description="description">VIP Single</value>
+			<value description="room_floor">1</value>
+			<value description="name">1A1</value>
+			<value description="room_number">1</value>
+			<value description="status">2</value>
+			<value description="id_room_type">1</value>
+		</row>
+		<row>
+			<value description="id">2</value>
+			<value description="description">VIP Double</value>
+			<value description="room_floor">1</value>
+			<value description="name">1A2</value>
+			<value description="room_number">2</value>
+			<value description="status">1</value>
+			<value description="id_room_type">2</value>
+		</row>
+		<row>
+			<value description="id">3</value>
+			<value description="description">VIP Couple</value>
+			<value description="room_floor">1</value>
+			<value description="name">1A3</value>
+			<value description="room_number">3</value>
+			<value description="status">0</value>
+			<value description="id_room_type">3</value>
+		</row>
+		<row>
+			<value description="id">4</value>
+			<value description="description">Standar Single 1</value>
+			<value description="room_floor">2</value>
+			<value description="name">2A1</value>
+			<value description="room_number">1</value>
+			<value description="status">1</value>
+			<value description="id_room_type">4</value>
+		</row>
+		<row>
+			<value description="id">5</value>
+			<value description="description">Standar Single 2</value>
+			<value description="room_floor">2</value>
+			<value description="name">2A2</value>
+			<value description="room_number">2</value>
+			<value description="status">-1</value>
+			<value description="id_room_type">4</value>
+		</row>
+		<row>
+			<value description="id">6</value>
+			<value description="description">Standar Double 1</value>
+			<value description="room_floor">2</value>
+			<value description="name">2A3</value>
+			<value description="room_number">3</value>
+			<value description="status">1</value>
+			<value description="id_room_type">5</value>
+		</row>
+		<row>
+			<value description="id">7</value>
+			<value description="description">Standar Double 2</value>
+			<value description="room_floor">2</value>
+			<value description="name">2A4</value>
+			<value description="room_number">4</value>
+			<value description="status">1</value>
+			<value description="id_room_type">5</value>
+		</row>
+		<row>
+			<value description="id">8</value>
+			<value description="description">Standar Couple 1</value>
+			<value description="room_floor">2</value>
+			<value description="name">2A5</value>
+			<value description="room_number">5</value>
+			<value description="status">1</value>
+			<value description="id_room_type">6</value>
+		</row>
+		<row>
+			<value description="id">9</value>
+			<value description="description">Standar Couple 2</value>
+			<value description="room_floor">2</value>
+			<value description="name">2A6</value>
+			<value description="room_number">6</value>
+			<value description="status">0</value>
+			<value description="id_room_type">6</value>
+		</row>
+	</table>
+	<table name="facility">
+		<column>id</column>
+		<column>default_price</column>
+		<column>name</column>
+		<row>
+			<value description="id">1</value>
+			<value description="default_price">20000</value>
+			<value description="name">Selimut</value>
+		</row>
+		<row>
+			<value description="id">2</value>
+			<value description="default_price">30000</value>
+			<value description="name">Extra Bed</value>
+		</row>
+	</table>
+	<table name="purchase">
+		<column>id</column>
+		<column>default_price</column>
+		<column>name</column>
+		<row>
+			<value description="id">1</value>
+			<value description="default_price">3000</value>
+			<value description="name">Indomie</value>
+		</row>
+		<row>
+			<value description="id">2</value>
+			<value description="default_price">5000</value>
+			<value description="name">Indomie Telor</value>
+		</row>
+		<row>
+			<value description="id">3</value>
+			<value description="default_price">3000</value>
+			<value description="name">Minuman Teh Kopi</value>
+		</row>
+		<row>
+			<value description="id">4</value>
+			<value description="default_price">6000</value>
+			<value description="name">Soft Drink</value>
+		</row>
+	</table>
+	<table name="customer">
+		<column>id</column>
+		<column>id_number</column>
+		<column>id_type</column>
+		<column>name</column>
+		<column>address</column>
+		<column>phone</column>
+		<column>age</column>
+		<column>birthdate</column>
+		<column>zip_code</column>
+		<row>
+			<value description="id">1</value>
+			<value description="id_number">10000000001</value>
+			<value description="id_type">1</value>
+			<value description="name">John Smith</value>
+			<value description="address">Singapore</value>
+			<value description="phone">1234567890</value>
+			<value description="age">31</value>
+			<value description="birthdate">1980-07-08</value>
+			<value description="zip_code">54321</value>
+		</row>
+		<row>
+			<value description="id">2</value>
+			<value description="id_number">10000000002</value>
+			<value description="id_type">1</value>
+			<value description="name">Anonymous</value>
+			<value description="address">Indonesia</value>
+			<value description="phone">987654321</value>
+			<value description="age">21</value>
+			<value description="birthdate">1990-01-01</value>
+			<value description="zip_code">12345</value>
+		</row>
+		<row>
+			<value description="id">3</value>
+			<value description="id_number">10000000003</value>
+			<value description="id_type">3</value>
+			<value description="name">John Black</value>
+			<value description="address">United Stated</value>
+			<value description="phone">123454321</value>
+			<value description="age">20</value>
+			<value description="birthdate">1990-12-31</value>
+			<value description="zip_code">51243</value>
+		</row>
+	</table>
+	
+</dataset>
