@@ -1,0 +1,35 @@
+<t:layout title="message:customerList.title"
+          heading="message:customerList.heading" menu="literal:CustomerMenu"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+    <t:messagebanner t:id="message" type="type"/>
+    <p>
+        <t:eventlink t:id="addTop">
+            <input type="button" class="button" value="${message:button.add}"/>
+        </t:eventlink>
+        <t:eventlink t:id="doneTop">
+            <input type="button" class="button" value="${message:button.done}"/>
+        </t:eventlink>
+    </p>
+
+    <t:grid source="customers" row="customer" id="customerList" class="table">
+	    <t:parameter name="idCell">
+	        <t:pagelink page="customerform" context="customer.id" id="customer-${customer.id}">
+	            ${customer.id}
+	        </t:pagelink>
+	    </t:parameter>
+    </t:grid>
+
+    <p>
+        <t:eventlink t:id="addBottom">
+            <input type="button" class="button" value="${message:button.add}"/>
+        </t:eventlink>
+        <t:eventlink t:id="doneBottom">
+            <input type="button" class="button" value="${message:button.done}"/>
+        </t:eventlink>
+    </p>
+
+    <script type="text/javascript">
+        highlightTableRows("customerList");
+    </script>
+</t:layout>

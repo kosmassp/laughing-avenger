@@ -1,0 +1,22 @@
+<!-- NOTE: If you're working offline, you might have to change the DOCTYPE to the following:-->
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!--!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"-->
+
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="org.appfuse.model.User"/>
+        <mapping class="org.appfuse.model.Role"/>
+        <mapping class="org.simple.project.model.RoomType"/>
+        <mapping class="org.simple.project.model.Event"/>
+        <mapping class="org.simple.project.model.Customer"/>
+        <mapping class="org.simple.project.model.Purchase"/>
+        <mapping class="org.simple.project.model.Facility"/>
+        <mapping class="org.simple.project.model.EventPrice"/>
+        <mapping class="org.simple.project.model.Room"/>
+        <mapping class="org.simple.project.model.TransactionCiCo"/>
+        <mapping class="org.simple.project.model.PurchaseTransaction"/>
+        <mapping class="org.simple.project.model.FacilityTransaction"/>
+    </session-factory>
+</hibernate-configuration>
