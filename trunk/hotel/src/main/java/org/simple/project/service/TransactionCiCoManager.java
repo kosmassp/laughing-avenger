@@ -7,5 +7,6 @@ import org.simple.project.model.TransactionCiCo;
 
 public interface TransactionCiCoManager extends GenericManager<TransactionCiCo, Long> {
 	List<TransactionCiCo> findByCustomerName(String customerName);
+	List<TransactionCiCo> findByRoomIdAndStatus(Long roomId, Integer roomStatus);
 
 }

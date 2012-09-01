@@ -30,11 +30,20 @@ public class TransactionCiCoManagerImpl extends GenericManagerImpl<TransactionCi
 		return transactionCiCoDao.findByCustomerName(customerName);
 	}
 
+	public List<TransactionCiCo> findByRoomIdAndStatus(Long roomId, Integer trxStatus) {
+		return transactionCiCoDao.findByRoomIdAndStatus(roomId, trxStatus);
+	}
+
 	@Override
     public TransactionCiCo save(TransactionCiCo transactionCiCo) {
 		Room room  = transactionCiCo.getRoom();
-		room.setStatus(Room.Status.CHECKED);
+		if(TransactionCiCo.Status.CHECKED_IN.equals(transactionCiCo.getStatus()))
+			room.setStatus(Room.ServiceStatus.IN_SERVICE);
+		else if(TransactionCiCo.Status.CHECKED_OUT.equals(transactionCiCo.getStatus()))
+			room.setStatus(Room.ServiceStatus.AVAILABLE);
+		System.out.println("TransactionCiCoManager.save() .. CHECK APAKAH ROOM STATUSNYA BENAR ATAU TIDAK ");
 		roomManager.save(room);
+		
 //		customerManager.save(transactionCiCo.getCustomer());
 //		
 //		Set<FacilityTransaction> fTrxs = transactionCiCo.getFacilityTransaction();

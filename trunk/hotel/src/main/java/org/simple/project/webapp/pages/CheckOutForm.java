@@ -1,12 +1,18 @@
 package org.simple.project.webapp.pages;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.digester.SetRootRule;
+import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.Cached;
 import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Service;
 import org.apache.tapestry5.corelib.components.DateField;
@@ -25,20 +31,31 @@ import org.simple.project.model.FacilityTransaction;
 import org.simple.project.model.Room;
 import org.simple.project.model.TransactionCiCo;
 import org.simple.project.service.CustomerManager;
-import org.simple.project.service.DummyManager;
 import org.simple.project.service.RoomManager;
+import org.simple.project.service.TransactionCiCoManager;
 import org.simple.project.webapp.components.CheckboxSelect;
+import org.simple.project.webapp.services.GenericEncoder;
 import org.simple.project.webapp.services.ServiceFacade;
 import org.slf4j.Logger;
 
-public class CheckInForm extends BasePage{
+public class CheckOutForm extends BasePage{
 	@Inject
 	private Logger log;
 
-	@Persist
+	@Persist("client")
 	private TransactionCiCo transactionCiCo;
 	public TransactionCiCo getTransactionCiCo() {
 		return transactionCiCo;
+	}
+	
+	@Persist("client")
+	private Room room;
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	
@@ -59,7 +76,7 @@ public class CheckInForm extends BasePage{
 	
 	@Inject
 	@Service("transactionCiCoManager")
-	private GenericManager<TransactionCiCo, Long> transactionCiCoManager;
+	private TransactionCiCoManager transactionCiCoManager;
 
 	@Inject
 	@Service("roomManager")
@@ -68,10 +85,6 @@ public class CheckInForm extends BasePage{
 	@Inject
 	@Service("customerManager")
 	private CustomerManager customerManager;
-
-	@Inject
-	@Service("dummyManager")
-	private DummyManager dummyManager;
 
 	@Inject
 	@Service("facilityManager")
@@ -88,7 +101,7 @@ public class CheckInForm extends BasePage{
     @Inject
     private ServiceFacade serviceFacade;
     
-	@Component(id = "checkInForm")
+	@Component(id = "checkOutForm")
 	private Form form;
 
 	@Component(id = "idNumber", parameters = {"value=customer.idNumber", "validate=regexp=\\d*"})
@@ -120,14 +133,46 @@ public class CheckInForm extends BasePage{
 	private TextField zipCodeField;
 
 	@Component(id = "room", 
-			parameters = {	"value=transactionCiCo.room",
+			parameters = {	"value=room",
 							"encoder=roomEncoder",
 							"model=availableRooms",
 				            "validate=required",
-				            "blankoption=always",
-				            "zone=roomPriceZone" })
+				            "blankoption=never", 
+				            "zone=transactionZone"} )
 	private Select roomField;
+	
+	@Component(id = "transactionZone")
+	private Zone transactionZone;
+	public Object onValueChanged(Room room) 
+	{
+		System.out.println("On Room Value Changed Triggered");
 
+		List transactionList = transactionCiCoManager.findByRoomIdAndStatus(room.getId(),TransactionCiCo.Status.CHECKED_IN);
+		
+		if(!transactionList.isEmpty()){
+			transactionCiCo = (TransactionCiCo) transactionList.get(0);
+			System.out.println(transactionCiCo.getCustomerData());
+			try{
+				this.setCustomer(transactionCiCo.getCustomer());
+//				Set<FacilityTransaction> facilities = transactionCiCo.getFacilityTransaction();
+//				ArrayList<Facility> facilityList = new ArrayList<Facility>();
+//				for (FacilityTransaction facilityTransaction : facilities) {
+//					System.out.println(facilityTransaction);
+//				}
+//				this.setSelectedFacilities(facilityList);
+			}catch (Exception e) {
+				System.out.println("ERRORR !! On setting customer");
+			}
+		}else{
+			System.out.println("Transaction Not Found ");
+		}
+//		availableModels = findAvailableModels(maker);
+//      return modelZone.getBody();
+
+		return transactionZone.getBody();
+	}
+
+	
 	@Component(id = "facility", 
 			parameters = {	"model=facilityModel",
 							"encoder=facilityEncoder",
@@ -139,18 +184,13 @@ public class CheckInForm extends BasePage{
 							"encoder=eventEncoder",
 							"model=eventModel",
 				            "validate=required",
-				            "zone=roomPriceZone"   })
+				            "blankoption=never"  })
 	private Select eventField;
 
 	@Component(id = "roomPrice", 
-			parameters = {	"value=roomPrice",
-							"readonly=true"})
+			parameters = {	"value=eventPrice",
+							"readonly=eventPriceReadOnly"})
 	private TextField roomPriceField;
-
-	@Component(id = "customRoomPrice", 
-			parameters = {	"value=customRoomPrice",
-							"validate=required" })
-	private TextField customRoomPriceField;
 
 //
 //    @Component(id = "idType",
@@ -161,68 +201,13 @@ public class CheckInForm extends BasePage{
 //                    "blankoption=never"})
 //    private Select idTypeField;
 	
-//	@OnEvent(component = "event", value=EventConstants.VALUE_CHANGED)
-//	public void onValueChangeFromEvent(Object value){
-//		System.out.println("TESTTTTT" + value);
-//		System.out.println("XX -> "+getTransactionCiCo().getEvent());
-//		
-//	}
-	
-	private BigDecimal roomPrice;
-	public BigDecimal getRoomPrice(){
-		return roomPrice;
-	}
-	public void setRoomPrice(BigDecimal roomPrice){
-		this.roomPrice = roomPrice ;
-	}
-	
-	private BigDecimal customRoomPrice;
-	public BigDecimal getCustomRoomPrice(){
-		return customRoomPrice;
-	}
-	public void setCustomRoomPrice(BigDecimal customRoomPrice){
-		this.customRoomPrice = customRoomPrice ;
-	}
-	
-	
-	@Component ( id = "roomPriceZone")
-	private Zone roomPriceZone;
-	public Object onValueChanged(Object re) 
-	{
-//		try{ testing purpose
-//			System.out.println((Object[])dummyManager.findNativeQuery("select r.* from room r join transaction t on (t.id_room = r.id and t.status = ? ) ", TransactionCiCo.Status.CHECKED_IN).get(0)+"");
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
+	@OnEvent(component = "event", value=EventConstants.VALUE_CHANGED)
+	public void onValueChangeFromEvent(Object value){
+		System.out.println("TESTTTTT" + value);
+		System.out.println("XX -> "+getTransactionCiCo().getEvent());
 		
-		if(re instanceof Room){
-			System.out.println("On Room Value Changed Triggered");
-			transactionCiCo.setRoom((Room)re);
-		} else if(re instanceof Event){
-			System.out.println("On Event Value Changed Triggered");
-			transactionCiCo.setEvent((Event)re);
-		}
+	}
 	
-		Event event = transactionCiCo.getEvent();
-		Room room = transactionCiCo.getRoom();
-		
-		
-		// just for views, the real value are when on success value.
-		if(isEventCustom(event.getName())){
-			customRoomPrice = getRoomPrice(eventManager.get(DefaultConstant.DEFAULT_EVENT_ID),room);
-			roomPrice = BigDecimal.ZERO;
-		} else {
-			customRoomPrice = BigDecimal.ZERO;
-			roomPrice = getRoomPrice(event,room);
-		}
-		return roomPriceZone.getBody();
-	}
-
-	private boolean isEventCustom(String eventName) {
- 		return eventName.equals("Custom");
-	}
-
-
 	private boolean cancel;
 	private boolean delete;
 	private BigDecimal eventPrice;
@@ -236,14 +221,13 @@ public class CheckInForm extends BasePage{
     }
     
 	void beginRender() {
-	    if (customer == null) {
-	        customer = new Customer();
-	    }
-	    if (transactionCiCo == null) {
-	        transactionCiCo = new TransactionCiCo();
-	        transactionCiCo.setEvent(eventManager.get(DefaultConstant.DEFAULT_EVENT_ID));
-	    }
-        transactionCiCo.setRoom(null);
+//	    if (customer == null) {
+//	        customer = new Customer();
+//	    }
+//	    if (transactionCiCo == null) {
+//	        transactionCiCo = new TransactionCiCo();
+//	        transactionCiCo.setEvent(eventManager.get(DefaultConstant.DEFAULT_EVENT_ID));
+//	    }
 	}
 	
 	void onValidateForm() {
@@ -271,48 +255,42 @@ public class CheckInForm extends BasePage{
 		if (cancel) return onCancel();
 
 		log.debug("Check customer availablity...");
-		List<Customer> foundedCustomers = customerManager.findByIdNumberAndType(customer.getIdNumber(), customer.getIdType());
-		if(!foundedCustomers.isEmpty()){
-			customer = foundedCustomers.get(0); // setting it to the first foundedCustomer since the possibility of having idNumber and idType not unique is almost impossible. (99% return 1 customer if any) 
-			for (Customer foundedCustomer : foundedCustomers) {
-				if(foundedCustomer.getName().equalsIgnoreCase(customer.getName()))
-					customer = foundedCustomer;
-			}
-		}
-		
+//		List<Customer> foundedCustomers = customerManager.findByIdNumberAndType(customer.getIdNumber(), customer.getIdType());
+//		if(!foundedCustomers.isEmpty()){
+//			customer = foundedCustomers.get(0); // setting it to the first foundedCustomer since the possibility of having idNumber and idType not unique is almost impossible. (99% return 1 customer if any) 
+//			for (Customer foundedCustomer : foundedCustomers) {
+//				if(foundedCustomer.getName().equalsIgnoreCase(customer.getName()))
+//					customer = foundedCustomer;
+//			}
+//		}
+//		
 //		boolean isNew = (customer.getId() == null);
 //		if(isNew){
 //			customerManager.save(customer);
 //		}
 		
-		log.debug("Transaction check in...");
-//		t.setCheckInBy(getSession());
-		transactionCiCo.setCustomer(customer);
-		Room room = transactionCiCo.getRoom();
-		room.setStatus(Room.ServiceStatus.IN_SERVICE);
-		transactionCiCo.setRoom(room);
-		for (Facility facility : selectedFacilities) {
-			transactionCiCo.addFacilityTransaction(new FacilityTransaction(facility));
-		}
-		transactionCiCo.setStatus(TransactionCiCo.Status.CHECKED_IN);
-		transactionCiCo.setCheckInBy(getCurrentUser());
-		transactionCiCo.setCheckInByName(getCurrentUser().getFullName());
-		transactionCiCo.setCheckInTime(Calendar.getInstance().getTime());
-		transactionCiCo.setCreatedBy(getCurrentUser());
-		transactionCiCo.setCreatedDate(Calendar.getInstance().getTime());
-		transactionCiCo.setCustomerData(customer.toString());
-		//TODO eventPrice
-		transactionCiCo.setRoomPrice(getRoomPrice(transactionCiCo.getEvent(),transactionCiCo.getRoom()));
-		transactionCiCo.setLastUpdateTime(Calendar.getInstance().getTime());
-		transactionCiCoManager.save(transactionCiCo);
+		log.debug("Transaction check out...");
 
-//		if (isNew) {
-//			customerList.addInfo(key, true);
-//			return customerList;
-//		} else {
-			addInfo("checkin.success", true);
-			return this;
-//		}
+		// has been managed by transactionCiCoManager
+//		Room room = getRoom();
+//		room.setStatus(Room.Status.AVAILABLE);
+//		roomManager.save(room);
+		
+		try{
+			transactionCiCo.setStatus(TransactionCiCo.Status.CHECKED_OUT);
+			transactionCiCo.setCheckOutBy(getCurrentUser());
+			transactionCiCo.setCheckOutByName(getCurrentUser().getFullName());
+			transactionCiCo.setCheckOutTime(Calendar.getInstance().getTime());
+			transactionCiCo.setModifiedBy(getCurrentUser());
+			transactionCiCo.setModifiedDate(Calendar.getInstance().getTime());
+			transactionCiCo.setLastUpdateTime(Calendar.getInstance().getTime());
+			transactionCiCoManager.save(transactionCiCo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		addInfo("checkout.success", true);
+		return this;
 	}
 
 	void onSelectedFromDelete() {
@@ -325,39 +303,39 @@ public class CheckInForm extends BasePage{
 		cancel = true;
 	}
 
-	private BigDecimal getRoomPrice(Event event, Room room){
+	public void setEventPrice(BigDecimal eventPrice){
+		this.eventPrice = eventPrice;
+	}
+	public BigDecimal getEventPrice(){
+		if(eventPrice != null && !eventPrice.equals(BigDecimal.ZERO))
+			return eventPrice;
 		try {
-			String eventName = event.getEventName();
-			String roomType = room.getRoomType().getName();
-			
-			if(isEventCustom(eventName)) return customRoomPrice;
-			
-			BigDecimal roomPrice = serviceFacade.getRoomPrice(roomType, eventName);
-			if( roomPrice  != null)
-				return roomPrice;
+			String event = getTransactionCiCo().getEvent().getEventName();
+			String roomType = getTransactionCiCo().getRoom().getRoomType().getName();
+			if(serviceFacade.getRoomPrice(roomType, event) != null)
+				return serviceFacade.getRoomPrice(roomType, event);
 		}catch (NullPointerException e) {
-			log.info("getPrice() on CheckInForm.java got NullPointer exception");
+			log.info("getEventPriceReadOnly() on CheckInForm.java got NullPointer exception");
 			log.info(e.getMessage());
 			return BigDecimal.ZERO;
 		}
 		return BigDecimal.ZERO;
 	}
 	
-//	public boolean getEventPriceReadOnly(){
-//		try {
-//			String event = getTransactionCiCo().getEvent().getEventName();
-//			String roomType = getTransactionCiCo().getRoom().getRoomType().getName();
-//
-//			if(isEventCustom(event)) return false;
-//			if(serviceFacade.getRoomPrice(roomType, event) == null) return false;
-//		}catch (NullPointerException e) {
-//			log.info("getEventPriceReadOnly() on CheckInForm.java got NullPointer exception");
-//			log.info(e.getMessage());
-//			return true;
-//		}
-//		return true;
-//	}
-	
+	public boolean getEventPriceReadOnly(){
+		boolean returnValue = true;
+		try {
+			String event = getTransactionCiCo().getEvent().getEventName();
+			String roomType = getTransactionCiCo().getRoom().getRoomType().getName();
+			if(serviceFacade.getRoomPrice(roomType, event) == null)
+				returnValue = false;
+		}catch (NullPointerException e) {
+			log.info("getEventPriceReadOnly() on CheckInForm.java got NullPointer exception");
+			log.info(e.getMessage());
+			return true;
+		}
+		return returnValue;
+	}
 	Object onDelete() {
 //		customerManager.remove(customer.getId());
 //		customerList.addInfo("customer.deleted", true);
@@ -384,8 +362,9 @@ public class CheckInForm extends BasePage{
 	}
 
     public Object getAvailableRooms() {
-//    	List<Room> availableRoomList = roomManager.findByStatus(Room.ServiceStatus.AVAILABLE, Room.ServiceStatus.IN_SERVICE);
-    	List<Room> availableRoomList = roomManager.findByStatus(Room.ServiceStatus.AVAILABLE);
+    	List<Room> availableRoomList = roomManager.findByStatus(Room.ServiceStatus.IN_SERVICE);
+    	//TODO
+//    	List<Room> availableRoomList = dummyManager.findNativeQuery(select r.* from room join transactions where status = checkin);
 		return availableRoomList;
 	}
     

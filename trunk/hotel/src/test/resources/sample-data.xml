@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
+    <table name="dummy">
+        <column>idDummy</column>
+        <row>
+            <value description="id">77</value>
+        </row>
+    </table>
     <table name="app_user">
         <column>id</column>
         <column>username</column>
@@ -273,7 +279,7 @@
 			<value description="room_floor">1</value>
 			<value description="name">1A1</value>
 			<value description="room_number">1</value>
-			<value description="status">2</value>
+			<value description="status">0</value>
 			<value description="id_room_type">1</value>
 		</row>
 		<row>
@@ -300,7 +306,7 @@
 			<value description="room_floor">2</value>
 			<value description="name">2A1</value>
 			<value description="room_number">1</value>
-			<value description="status">1</value>
+			<value description="status">0</value>
 			<value description="id_room_type">4</value>
 		</row>
 		<row>
@@ -318,7 +324,7 @@
 			<value description="room_floor">2</value>
 			<value description="name">2A3</value>
 			<value description="room_number">3</value>
-			<value description="status">1</value>
+			<value description="status">0</value>
 			<value description="id_room_type">5</value>
 		</row>
 		<row>
@@ -327,7 +333,7 @@
 			<value description="room_floor">2</value>
 			<value description="name">2A4</value>
 			<value description="room_number">4</value>
-			<value description="status">1</value>
+			<value description="status">0</value>
 			<value description="id_room_type">5</value>
 		</row>
 		<row>
@@ -336,7 +342,7 @@
 			<value description="room_floor">2</value>
 			<value description="name">2A5</value>
 			<value description="room_number">5</value>
-			<value description="status">1</value>
+			<value description="status">0</value>
 			<value description="id_room_type">6</value>
 		</row>
 		<row>

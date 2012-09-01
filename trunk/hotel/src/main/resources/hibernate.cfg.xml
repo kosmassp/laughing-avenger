@@ -8,6 +8,7 @@
     <session-factory>
         <mapping class="org.appfuse.model.User"/>
         <mapping class="org.appfuse.model.Role"/>
+        <mapping class="org.simple.project.model.Dummy"/>
         <mapping class="org.simple.project.model.RoomType"/>
         <mapping class="org.simple.project.model.Event"/>
         <mapping class="org.simple.project.model.Customer"/>

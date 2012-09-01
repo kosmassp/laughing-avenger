@@ -1,5 +1,6 @@
 package org.simple.project.dao.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import org.appfuse.dao.hibernate.GenericDaoHibernate;
@@ -14,8 +15,12 @@ public class RoomDaoHibernate extends GenericDaoHibernate<Room, Long> implements
 		super(Room.class);
 	}
 
-	public List<Room> findByStatus(Integer status) {
-		return getHibernateTemplate().find("from Room where status = ?", status);
+	public List<Room> findByStatus(Integer... status) {
+		String questionMark = " ? ";
+		for (int i = 1; i < status.length; i++) {
+			questionMark = questionMark + ", ? "; 
+		}
+		return getHibernateTemplate().find("from Room where status in ( "+ questionMark+ " )", status); 
 	}
 
 }
