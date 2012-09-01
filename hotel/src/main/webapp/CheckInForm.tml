@@ -1,6 +1,7 @@
 <t:layout title="message:input.checkin"
           heading="message:input.checkin" menu="literal:CheckInMenu"
-          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd"
+          xmlns:p="tapestry:parameter" >
 
     <t:messagebanner t:id="message" type="type"/>
 
@@ -91,14 +92,28 @@
 		        </td>
 		    </tr>
 
-	        <tr>
-		        <td>
-		            <t:label class="desc" for="roomPrice">${message:roomPrice}</t:label>
-		        </td>
-		        <td>
-		            <input class="text medium" type="text" t:id="roomPrice"/>
-		        </td>
-		    </tr>
+	        <t:zone t:id="roomPriceZone" id="roomPriceZone">
+	        	<t:if test="roomPrice">
+			        <tr>
+				        <td>
+				            <t:label class="desc" for="roomPrice">${message:roomPrice}</t:label>
+				        </td>
+				        <td>
+				            <input class="text medium" type="text" t:id="roomPrice"/>
+				        </td>
+				    </tr>
+				</t:if>
+	        	<t:if test="customRoomPrice">
+			        <tr>
+				        <td>
+				            <t:label class="desc" for="roomPrice">${message:roomPrice}</t:label>
+				        </td>
+				        <td>
+				            <input class="text medium" type="text" t:id="customRoomPrice"/>
+				        </td>
+				    </tr>
+				</t:if>
+	        </t:zone>
 
 	        <tr>
 		        <td>

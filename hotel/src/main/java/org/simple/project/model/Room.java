@@ -20,9 +20,8 @@ public class Room extends BaseObject implements ListToMapModel,Comparable<Room>{
 	
 	private static final long serialVersionUID = 7189584255448736970L;
 
-	public static final class Status {
-		public static final Integer BOOKED = 2;
-		public static final Integer CHECKED = 1;
+	public static final class ServiceStatus {
+		public static final Integer IN_SERVICE = 1;
 		public static final Integer AVAILABLE = 0;
 		public static final Integer OUT_OF_SERVICE = -1;
 	}

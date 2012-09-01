@@ -7,4 +7,5 @@ import org.simple.project.model.TransactionCiCo;
 
 public interface TransactionCiCoDao extends GenericDao<TransactionCiCo, Long> {
 	public List<TransactionCiCo> findByCustomerName(String customerName);
+	public List<TransactionCiCo> findByRoomIdAndStatus(Long roomId, Integer trxStatus);
 }

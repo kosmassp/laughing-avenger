@@ -31,7 +31,7 @@ import org.hibernate.annotations.Proxy;
  */
 @Entity
 @Table(name = "transaction")
-//@Proxy(lazy=false)
+@Proxy(lazy=false)
 @Searchable
 public class TransactionCiCo extends BaseObject implements Serializable{
 	private static final long serialVersionUID = 1899563968705462948L;
@@ -46,6 +46,8 @@ public class TransactionCiCo extends BaseObject implements Serializable{
 	private Long id;
 	private Customer customer;
 	private Integer status;
+	private Date bookTime;
+	private User bookBy;
 	private Date checkInTime;
 	private User checkInBy;
 	private Date checkOutTime;
@@ -94,13 +96,24 @@ public class TransactionCiCo extends BaseObject implements Serializable{
 		return status;
 	}
 	
-	@Column(name="check_in_time", nullable = false)
+	@Column(name="book_time", nullable = true)
+	public Date getBookTime() {
+		return bookTime;
+	}
+
+    @ManyToOne
+    @JoinColumn(name="book_by", nullable = true)
+	public User getBookBy() {
+		return bookBy;
+	}
+
+    @Column(name="check_in_time", nullable = true)
 	public Date getCheckInTime() {
 		return checkInTime;
 	}
 
     @ManyToOne
-    @JoinColumn(name="check_in_by")
+    @JoinColumn(name="check_in_by", nullable = true)
 	public User getCheckInBy() {
 		return checkInBy;
 	}
@@ -225,6 +238,12 @@ public class TransactionCiCo extends BaseObject implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public void setBookTime(Date bookTime) {
+		this.bookTime = bookTime;
+	}
+	public void setBookBy(User bookBy) {
+		this.bookBy = bookBy;
+	}
 	public void setCheckInTime(Date checkInTime) {
 		this.checkInTime = checkInTime;
 	}
@@ -329,17 +348,30 @@ public class TransactionCiCo extends BaseObject implements Serializable{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int prime = 41;
 		int result = 1;
 		result = prime * result
-				+ ((checkOutBy == null) ? 0 : checkOutBy.hashCode());
-		result = prime * result
-				+ ((checkOutTime == null) ? 0 : checkOutTime.hashCode());
+				+ ((currentFee == null) ? 0 : currentFee.hashCode());
 		result = prime * result
 				+ ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result
+				+ ((customerData == null) ? 0 : customerData.hashCode());
 		result = prime * result + ((event == null) ? 0 : event.hashCode());
+		result = prime
+				* result
+				+ ((facilityTransaction == null) ? 0 : facilityTransaction
+						.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((idCardStatus == null) ? 0 : idCardStatus.hashCode());
+		result = prime * result + ((paidFee == null) ? 0 : paidFee.hashCode());
+		result = prime
+				* result
+				+ ((purchaseTransaction == null) ? 0 : purchaseTransaction
+						.hashCode());
 		result = prime * result + ((room == null) ? 0 : room.hashCode());
+		result = prime * result
+				+ ((roomPrice == null) ? 0 : roomPrice.hashCode());
 		return result;
 	}
 
@@ -352,40 +384,65 @@ public class TransactionCiCo extends BaseObject implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		TransactionCiCo other = (TransactionCiCo) obj;
-		if (checkOutBy == null) {
-			if (other.checkOutBy != null)
+		if (currentFee == null) {
+			if (other.currentFee != null)
 				return false;
-		} else if (!checkOutBy.equals(other.checkOutBy))
-			return false;
-		if (checkOutTime == null) {
-			if (other.checkOutTime != null)
-				return false;
-		} else if (!checkOutTime.equals(other.checkOutTime))
+		} else if (!currentFee.equals(other.currentFee))
 			return false;
 		if (customer == null) {
 			if (other.customer != null)
 				return false;
 		} else if (!customer.equals(other.customer))
 			return false;
+		if (customerData == null) {
+			if (other.customerData != null)
+				return false;
+		} else if (!customerData.equals(other.customerData))
+			return false;
 		if (event == null) {
 			if (other.event != null)
 				return false;
 		} else if (!event.equals(other.event))
+			return false;
+		if (facilityTransaction == null) {
+			if (other.facilityTransaction != null)
+				return false;
+		} else if (!facilityTransaction.equals(other.facilityTransaction))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (idCardStatus == null) {
+			if (other.idCardStatus != null)
+				return false;
+		} else if (!idCardStatus.equals(other.idCardStatus))
+			return false;
+		if (paidFee == null) {
+			if (other.paidFee != null)
+				return false;
+		} else if (!paidFee.equals(other.paidFee))
+			return false;
+		if (purchaseTransaction == null) {
+			if (other.purchaseTransaction != null)
+				return false;
+		} else if (!purchaseTransaction.equals(other.purchaseTransaction))
+			return false;
 		if (room == null) {
 			if (other.room != null)
 				return false;
 		} else if (!room.equals(other.room))
 			return false;
+		if (roomPrice == null) {
+			if (other.roomPrice != null)
+				return false;
+		} else if (!roomPrice.equals(other.roomPrice))
+			return false;
 		return true;
 	}
-	
-	
+
+
 	
 	
 }

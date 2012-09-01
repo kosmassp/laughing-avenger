@@ -180,11 +180,13 @@ public class ServiceFacadeImpl implements ServiceFacade {
     }
 
     public GenericEncoder getGenericEncoder(String genericEncoder){
+    	//TODO must add reseter when there is a change in this getter (ex: new facility, new purchase)
     	if(genericEncoderMap.get(genericEncoder) == null){ // another way to reset genericEncoderMap getNull
     		genericEncoderMap.put("roomManager",new GenericEncoder<Room>(roomManager.getAll()));
     		genericEncoderMap.put("eventManager",new GenericEncoder<Event>(eventManager.getAll()));
     		genericEncoderMap.put("facilityManager",new GenericEncoder<Facility>(facilityManager.getAll()));
     		genericEncoderMap.put("puchaseManager",new GenericEncoder<Purchase>(purchaseManager.getAll()));
+    		genericEncoderMap.put("roomTypeManager",new GenericEncoder<RoomType>(roomTypeManager.getAll()));
     	}
     		
     	return genericEncoderMap.get(genericEncoder);

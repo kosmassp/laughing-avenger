@@ -18,7 +18,7 @@ import org.compass.annotations.SearchableId;
 @Entity
 @Table(name = "room_type")
 @Searchable
-public class RoomType extends BaseObject implements Serializable {
+public class RoomType extends BaseObject implements Serializable, ListToMapModel,Comparable<RoomType> {
 	
 	private static final long serialVersionUID = 2366584273243236764L;
 	
@@ -71,10 +71,10 @@ public class RoomType extends BaseObject implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int prime = 61;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+//		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -92,12 +92,16 @@ public class RoomType extends BaseObject implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
+//		if (name == null) {
+//			if (other.name != null)
+//				return false;
+//		} else if (!name.equals(other.name))
+//			return false;
 		return true;
+	}
+
+	public int compareTo(RoomType roomType) {
+		return getName().compareTo(roomType.getName());
 	}
 	
 	

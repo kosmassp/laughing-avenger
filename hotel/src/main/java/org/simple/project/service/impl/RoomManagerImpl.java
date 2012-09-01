@@ -19,7 +19,7 @@ public class RoomManagerImpl extends GenericManagerImpl<Room, Long> implements R
 		this.roomDao = roomDao;
 	}
 
-	public List<Room> findByStatus(Integer status) {
+	public List<Room> findByStatus(Integer... status) {
 		return roomDao.findByStatus(status);
 	}
 

@@ -19,5 +19,9 @@ public class TransactionCiCoDaoHibernate extends GenericDaoHibernate<Transaction
 		return getHibernateTemplate().find("from TransactionCiCo where customer.name = ?", customerName);
 	}
 
+	public List<TransactionCiCo> findByRoomIdAndStatus(Long roomId, Integer trxStatus) {
+		return getHibernateTemplate().find("from TransactionCiCo where room.id = ? and status = ? ", roomId, trxStatus);
+	}
+
 
 }

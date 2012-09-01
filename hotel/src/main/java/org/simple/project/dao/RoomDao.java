@@ -6,5 +6,5 @@ import org.appfuse.dao.GenericDao;
 import org.simple.project.model.Room;
 
 public interface RoomDao extends GenericDao<Room, Long> {
-	public List<Room> findByStatus(Integer status);
+	public List<Room> findByStatus(Integer... status);
 }

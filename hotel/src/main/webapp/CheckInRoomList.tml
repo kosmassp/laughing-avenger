@@ -1,0 +1,30 @@
+<t:layout title="message:customerList.title"
+          heading="message:customerList.heading" menu="literal:CustomerMenu"
+          xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+    <t:messagebanner t:id="message" type="type"/>
+	
+    <form t:id="checkInRoomListForm">
+	    <t:errors/>	
+	    <table>
+	        <tr>
+		        <td>
+		            <t:label class="desc" for="event">${message:event}</t:label>
+		        </td>
+		        <td>
+		            <input class="text medium" type="text" t:id="event"/>
+		        </td>
+		    </tr>
+		</table>
+        <input t:type="submit" t:id="searchButton" id="searchButton" value="message:button.search"/>
+	</form>
+	
+	<br/>
+	<br/>
+	<p>
+	    <t:grid source="rooms" id="roomList" class="table" />
+	</p>
+    <script type="text/javascript">
+        highlightTableRows("roomList");
+    </script>
+</t:layout>

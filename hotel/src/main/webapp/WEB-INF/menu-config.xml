@@ -12,8 +12,11 @@
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
             <Item name="FileUpload" title="menu.selectFile" page="/fileupload"/>
         </Menu>
-        <Menu name="CheckIn" title="menu.checkin" description="Check In Menu" page="checkInForm" roles="ROLE_ADMIN,ROLE_USER"/>
-        <Menu name="CheckOut" title="menu.checkout" description="Check Out Menu" page="/checkout" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="CheckIn" title="menu.checkin" description="Check In Menu" page="checkInForm" roles="ROLE_ADMIN,ROLE_USER">
+            <Item name="Rooms" title="menu.checkin.room" page="checkInRoomList"/>
+            <Item name="CheckIn" title="menu.checkin" page="checkInForm"/>
+        </Menu>
+        <Menu name="CheckOut" title="menu.checkout" description="Check Out Menu" page="checkOutForm" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="Booking" title="menu.booking" description="Check Out Menu" page="/booking" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
     </Menus>
