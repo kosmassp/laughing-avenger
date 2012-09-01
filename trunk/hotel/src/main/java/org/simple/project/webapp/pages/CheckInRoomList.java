@@ -89,7 +89,7 @@ public class CheckInRoomList extends BasePage {
 
 	private static final String SQL_ROOMS = 
 		" select room, description, room_floor, name, room_number, id_room_type, price, id_event, book_status, book_time, book_transaction " +
-		" from viewroom " +
+		" from room_for_checkin " +
 		" where 1 = 1 ";
 	private static final String WHERE_EVENT = " and id_event = ? ";
 
